@@ -1,10 +1,25 @@
-# musicmaster
+# musicmaster (Express would be a far better answer since you will have to do extensive routing with react)
 
 ### Notes
 
 1.  sometimes you have to reload entire server to get file to refresh
 
 2.  You should add any css templates in index.html above the title page
+
+#### Managing Web requests in React
+
+##### Spotify API
+https://developer.spotify.com/web-api/endpoint-reference/
+
+How to solve access control resolution error
+https://www.youtube.com/watch?time_continue=8&v=uDy_cvf4nDg
+
+https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome
+
+
+https://github.com/cxdot
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
