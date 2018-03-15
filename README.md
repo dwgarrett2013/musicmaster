@@ -16,19 +16,6 @@ https://www.youtube.com/watch?time_continue=8&v=uDy_cvf4nDg
 
 https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome
 
-client id:
-a00a926553364fe2b89e5f3b8895b483
-
-client secret:
-35dd0dd473804f51adfe9150726a4745
-
-response_type:
-code
-
-redirect_uri:
-http://localhost:3000/
-
-https://accounts.spotify.com/authorize/?client_id=a00a926553364fe2b89e5f3b8895b483&response_type=code&redirect_uri=http%3A%2F%2localhost%3A3000%2F
 
 https://github.com/cxdot
 
