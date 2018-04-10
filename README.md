@@ -8,6 +8,10 @@
 
 #### Managing Web requests in React
 
+#### Itunes API
+https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#searchexamples
+
+
 ##### Spotify API
 https://developer.spotify.com/web-api/endpoint-reference/
 

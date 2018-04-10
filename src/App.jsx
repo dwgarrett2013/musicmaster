@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css'; //imports stylesheets
 import { FormGroup, FormControl, InputGroup, Glyphicon } from 'react-bootstrap';
+import Profile from './Profile';  //imports the profile component
 
 class App extends Component {
 
@@ -8,69 +9,44 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''  //this is what the user types
+      query: '',  //this is what the user types
+      artist: null  //need to set arist state as null
     }
   }
 
   search() {
-    console.log('this.state', this.state);  //this logs this.state for testing
-    const BASE_URL = 'https://accounts.spotify.com/authorize?'; // this sets the base URL to use for web requests.  The tailing '?' is important to recognize that this is a query
-    const FETCH_URL= `${BASE_URL}response_type=code&client_id=&scope=user-read-private user-read-email&redirect_uri=http://localhost:3000`
-    //const FETCH_URL= `${BASE_URL}q=${this.state.query}&type=artist&limit=1`;  // Forms a URL based on the type of query and force it to be artists.  This uses a template stream instead (you could also use + and +=)
-    console.log('FETCH_URL',FETCH_URL);   //log the url for testing
+    console.log('this.state', this.state.query);  //this logs this.state for testing
+    //const BASE_URL = 'https://accounts.spotify.com/authorize?'; // this sets the base URL to use for web requests.  The tailing '?' is important to recognize that this is a query
+    const BASE_URL = 'https://itunes.apple.com/search?'; // this sets the base URL to use for web requests.  The tailing '?' is important to recognize that this is a query
+    //const FETCH_URL = BASE_URL + 'term=' + this.state.query
+    //                  + '&limit=1';  //this sets the itunes query to search for
 
-    //use fetch() function to get response from a URL
-    //fetch() method returns a Promise that says data will eventually be returned.  but we will need to wait until the callback is made
-    //we use the .then() function to log the response when it comes
+    //can use backticks to wrap the FETCHURL string
+    const FETCH_URL = `${BASE_URL}term=${this.state.query}&entity=musicArtist&limit=1`;  //this sets the itunes query to search for
 
-    let request = require('request'); // "Request" library
+    console.log('FETCH_URL', FETCH_URL);  //logs query url to output
 
-    var options = {
-          url: FETCH_URL,
-          headers: { 'Access-Control-Allow-Origin': '* '},
-          json: true
-    }
-    // use the access token to access the Spotify Web API
-    request.get(options, function(error, response, body) {
-      console.log(body);
+    //fetch method returns a promise that something that may or may not eventually return
+    //we check for promise in callback function which is created as an anonymous function
+    //this works since we are only retrieving one result
+    //we can determine that if there are no results, we do nothing
+    fetch(FETCH_URL, {
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(json => {
+        const artist = json.results[0];
+        console.log('artist',artist);
+        this.setState({artist});  //this will set the artist in the state field
+        console.log('state',this.state);
+    })
+    .catch((err) =>{
+        console.log(err);
     });
-  };
-
-
-
-
-    /*let reqHeaders=new Headers();
-    reqHeaders.set('Access-Control-Allow-Origin', '*');
-    reqHeaders.set('Access-Control-Allow-Headers', 'Content-Type');
-    reqHeaders.set('Access-Control-Allow-Methods', 'GET');
-
-    let myInit= {
-      method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Origin': '*',
-        'Boosh': '3'
-      }
-      //cache: 'default',
-      //Content-Type: 'text/plain'
-    };
-    */
-
-
-
-    //let request = new Request(FETCH_URL,myInit);
-    //console.log('request',request);
-    //console.log('val of header',reqHeaders.get('Access-Control-Allow-Origin'));
-
-
-    //fetch(request,myInit);.then(response => console.log(response));
-    //fetch(request,{
-    //  method: 'GET'
-    //}).then(response => console.log(response));
+  }
 
   render() {
+      //console.log('state',this.state);
       // returns the render
 
       //create title
@@ -84,6 +60,9 @@ class App extends Component {
         //use onChange to change value of query every time the input box is modified
         //'event.key' is the result of the an keys typed in the input box
         //can use anonymous classes within code as done with event.key
+
+      //we can use imported Profile component
+        //you can add props to the profile component
       return (
         <div className="App">
           <div className="App-title">Music Master</div>
@@ -105,10 +84,9 @@ class App extends Component {
               </InputGroup.Addon>
             </InputGroup>
           </FormGroup>
-          <div className="Profile">
-            <div>Artist Picture</div>
-            <div>Artist Name</div>
-          </div>
+          <Profile
+            artist={this.state.artist}
+          />
           <div className="Gallery">
             Gallery
           </div>
