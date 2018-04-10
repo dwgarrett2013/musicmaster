@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css'; //imports stylesheets
 import { FormGroup, FormControl, InputGroup, Glyphicon } from 'react-bootstrap';
 import Profile from './Profile';  //imports the profile component
+import Gallery from './Gallery';  //imports the gallery component
 
 class App extends Component {
 
@@ -69,6 +70,8 @@ class App extends Component {
   }
 
   render() {
+      //best process for wireframing is to create divs then worry about custom components
+
       //console.log('state',this.state);
       // returns the render
 
@@ -87,6 +90,9 @@ class App extends Component {
       //we can use imported Profile component
         //you can add props to the profile component
       //we will send the track image url to be a placeholder for the artist image
+
+      //Gallery segment
+        //pass tracks component the list of tracks that we received
       return (
         <div className="App">
           <div className="App-title">Music Master</div>
@@ -108,15 +114,16 @@ class App extends Component {
               </InputGroup.Addon>
             </InputGroup>
           </FormGroup>
-          <Profile
-            artist={this.state.artist}
-            imageUrl={this.state.imageUrl}
-          />
-          <div className="Gallery">
-            Gallery
+          <div>
+            <Profile
+              artist={this.state.artist}
+              imageUrl={this.state.imageUrl}
+            />
+            <Gallery
+              tracks={this.state.tracks}
+            />
           </div>
         </div>
-
       );
   }
 }
