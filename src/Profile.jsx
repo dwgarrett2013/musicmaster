@@ -22,9 +22,9 @@ class Profile extends Component {
           src={imageUrl}
         />
         <div className="profile-info">
-          <div className="profile-name">Artist Name: {artist.artistName}</div>
-          <div className="profile-link">Itunes Page URL: {artist.artistLinkUrl}</div>
-          <div className="profile-genre">Genre: {artist.primaryGenreName}</div>
+          <div className="profile-name">{artist.artistName}</div>
+          <div className="profile-link">{artist.artistLinkUrl}</div>
+          <div className="profile-genre">{artist.primaryGenreName}</div>
         </div>
       </div>
     )
