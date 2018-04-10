@@ -6,15 +6,27 @@ import './App.css';
 class Profile extends Component {
   render() {
     let artist = {name: '', artistLinkUrl: ''};
+    let imageUrl = '';
     //we set this value if we have return an artist to the props field
     if(this.props.artist != null) {
       artist=this.props.artist;
     }
+    if(this.props.imageUrl != null) {
+      imageUrl=this.props.imageUrl;
+    }
     return(
-      <div>
-        <div>{artist.artistName}</div>
-        <div>{artist.artistLinkUrl}</div>
+      <div className="profile">
+        <img
+          alt="Profile"
+          className="profile-img"
+          src={imageUrl}
+        />
+        <div className="profile-info">
+          <div className="profile-name">Artist Name: {artist.artistName}</div>
+          <div className="profile-link">Itunes Page URL: {artist.artistLinkUrl}</div>
+          <div className="profile-genre">Genre: {artist.primaryGenreName}</div>
         </div>
+      </div>
     )
   }
 }

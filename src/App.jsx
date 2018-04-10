@@ -10,7 +10,9 @@ class App extends Component {
     super(props);
     this.state = {
       query: '',  //this is what the user types
-      artist: null  //need to set arist state as null
+      artist: null,  //need to set arist state as null
+      tracks: [],  //initialize tracks to an empty array
+      imageUrl: ''  //this is the url of the image to retrieve
     }
   }
 
@@ -22,9 +24,11 @@ class App extends Component {
     //                  + '&limit=1';  //this sets the itunes query to search for
 
     //can use backticks to wrap the FETCHURL string
-    const FETCH_URL = `${BASE_URL}term=${this.state.query}&entity=musicArtist&limit=1`;  //this sets the itunes query to search for
-
+    let FETCH_URL = `${BASE_URL}term=${this.state.query}&entity=musicArtist&limit=1`;  //this sets the itunes query to search for
     console.log('FETCH_URL', FETCH_URL);  //logs query url to output
+
+    //get the tracks using the itunes lookup
+    const TRACK_URL = `https://itunes.apple.com/lookup?`;  //this sets the itunes query to search for
 
     //fetch method returns a promise that something that may or may not eventually return
     //we check for promise in callback function which is created as an anonymous function
@@ -38,7 +42,26 @@ class App extends Component {
         const artist = json.results[0];
         console.log('artist',artist);
         this.setState({artist});  //this will set the artist in the state field
-        console.log('state',this.state);
+        //console.log('state',this.state);
+
+        //get the top tracks for that artist using the artist id
+        //we will will set the artist.image to the top track result
+        FETCH_URL = `${TRACK_URL}id=${artist.artistId}&entity=song&limit=10`;
+        fetch(FETCH_URL, {
+          method: 'GET'
+        })
+        .then(response => response.json())
+        .then(json => {
+          //console.log('artists tracks',json);
+          const tracks = json.results.slice(1);
+
+          //use the first artwork image as url
+          const imageUrl = tracks[0].artworkUrl100;
+
+          //console.log('tracks',tracks);
+          this.setState({tracks, imageUrl});
+          console.log('state',this.state);
+        })
     })
     .catch((err) =>{
         console.log(err);
@@ -63,6 +86,7 @@ class App extends Component {
 
       //we can use imported Profile component
         //you can add props to the profile component
+      //we will send the track image url to be a placeholder for the artist image
       return (
         <div className="App">
           <div className="App-title">Music Master</div>
@@ -86,6 +110,7 @@ class App extends Component {
           </FormGroup>
           <Profile
             artist={this.state.artist}
+            imageUrl={this.state.imageUrl}
           />
           <div className="Gallery">
             Gallery
