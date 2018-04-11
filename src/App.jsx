@@ -12,21 +12,41 @@ class App extends Component {
     this.state = {
       query: '',  //this is what the user types
       artist: null,  //need to set arist state as null
+      artistImageUrl: null,
       tracks: [],  //initialize tracks to an empty array
       imageUrl: ''  //this is the url of the image to retrieve
     }
   }
 
   search() {
-    console.log('this.state', this.state.query);  //this logs this.state for testing
+    //console.log('this.state', this.state.query);  //this logs this.state for testing
     //const BASE_URL = 'https://accounts.spotify.com/authorize?'; // this sets the base URL to use for web requests.  The tailing '?' is important to recognize that this is a query
+    const BING_URL = 'https://api.cognitive.microsoft.com/bing/v7.0/search?';
+    let profilePicUrl = `${BING_URL}q=${this.state.query}&responsefilter=images&count=1`;
+    //console.log('profilePicUrl',profilePicUrl);
+
+    fetch(profilePicUrl, {
+      method: 'GET',
+      headers: new Headers({
+        'Ocp-Apim-Subscription-Key': ''
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+      //console.log('json',json.images.value[0].contentUrl);
+      let artistImageUrl=json.images.value[0].contentUrl;
+      this.setState({artistImageUrl});
+    })
+      //const profileArtist = json.images[0];
+
+
     const BASE_URL = 'https://itunes.apple.com/search?'; // this sets the base URL to use for web requests.  The tailing '?' is important to recognize that this is a query
     //const FETCH_URL = BASE_URL + 'term=' + this.state.query
     //                  + '&limit=1';  //this sets the itunes query to search for
 
     //can use backticks to wrap the FETCHURL string
     let FETCH_URL = `${BASE_URL}term=${this.state.query}&entity=musicArtist&limit=1`;  //this sets the itunes query to search for
-    console.log('FETCH_URL', FETCH_URL);  //logs query url to output
+    //console.log('FETCH_URL', FETCH_URL);  //logs query url to output
 
     //get the tracks using the itunes lookup
     const TRACK_URL = `https://itunes.apple.com/lookup?`;  //this sets the itunes query to search for
@@ -41,7 +61,7 @@ class App extends Component {
     .then(response => response.json())
     .then(json => {
         const artist = json.results[0];
-        console.log('artist',artist);
+        //console.log('artist',artist);
         this.setState({artist});  //this will set the artist in the state field
         //console.log('state',this.state);
 
@@ -61,7 +81,7 @@ class App extends Component {
 
           //console.log('tracks',tracks);
           this.setState({tracks, imageUrl});
-          console.log('state',this.state);
+          //console.log('state',this.state);
         })
     })
     .catch((err) =>{
@@ -118,6 +138,7 @@ class App extends Component {
             <Profile
               artist={this.state.artist}
               imageUrl={this.state.imageUrl}
+              artistImageUrl={this.state.artistImageUrl}
             />
             <Gallery
               tracks={this.state.tracks}
