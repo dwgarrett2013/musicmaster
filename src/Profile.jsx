@@ -12,7 +12,7 @@ class Profile extends Component {
       artist=this.props.artist;
     }
     if(this.props.imageUrl != null) {
-      imageUrl=this.props.imageUrl;
+      imageUrl=this.props.artistImageUrl;
     }
     return(
       <div className="profile">

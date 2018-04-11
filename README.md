@@ -11,6 +11,13 @@
 #### Itunes API
 https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#searchexamples
 
+#### Bing API
+https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-web-api-v7-reference
+
+https://azure.microsoft.com/en-us/try/cognitive-services/my-apis/?apiSlug=search-api-v7&country=UnitedStates&allowContact=true
+
+#### Fetch API
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
 ##### Spotify API
 https://developer.spotify.com/web-api/endpoint-reference/

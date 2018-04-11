@@ -61,12 +61,14 @@ class Gallery extends Component {
     return (
       <div>
         {tracks.map((track, k) => {
-          console.log('track',track);
+          //console.log('track',track);
           const trackImg=track.artworkUrl100; //iterate over each element as a "track", k represents index
           const trackName=track.trackName; //get the name of the track
           //BIG NOTE, YOU NEED TO RETURN THE JSX IN THE MAP FUNCTION SINCE IT IS UNDER A DIFFERENT SCOPE!!!!
           //the onclick track div tag will invoke the playAudio() function whenever a track is clicked
             //we can also add functionality to pause and switch songs
+          //adding animation to the device using track-play headder
+            //creates the triangle
           return (
             <div
               key={k}
@@ -78,6 +80,17 @@ class Gallery extends Component {
                 className="track-img"
                 alt="track"
               />
+              <div className="track-play">
+                <div className="track-play-inner">
+                  {
+                    //use a turnary expression to see if playing and give the correct button
+                    //EXPALINS THIS LOGIC
+                    this.state.playingUrl === track.previewUrl
+                      ? <span>| |</span>
+                      : <span>&#9654;</span>
+                  }
+                </div>
+              </div>
               <p className="track-text">
                   {trackName}
               </p>
